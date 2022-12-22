@@ -5,8 +5,8 @@ from scrapy import Selector
 from scrapy import Request
 
 
-class DemoSpider(scrapy.Spider):
-    name = 'demo'
+class NoveletteSpiderSpider(scrapy.Spider):
+    name = 'novelette_spider'
     allowed_domains = ['www.9kmy.com']
     start_urls = ['http://www.9kmy.com/shu/108946/']
 

@@ -6,7 +6,7 @@
 import scrapy
 
 
-class MyspiderItem(scrapy.Item):
+class NoveletteItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     chapter_id = scrapy.Field()
