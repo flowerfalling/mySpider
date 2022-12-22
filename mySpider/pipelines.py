@@ -5,23 +5,22 @@
 
 
 # useful for handling different item types with a single interface
-import pymysql
-
-
 class MyspiderPipeline:
     def __init__(self):
-        self.conn = pymysql.connect(host='localhost', port=3306, user='root', password='', database='falling',
-                                    charset='utf8mb4')
-        self.cursor = self.conn.cursor()
+        self.f = open('背着老婆降妖除魔.txt', 'w+', encoding='utf-8')
+        self.data = {}
+        pass
 
     def process_item(self, item, spider):
-        title = item.get('title', '')
-        rank = item.get('rank', 0)
-        subject = item.get('subject', '')
-        self.cursor.execute('insert into tb_top_movie (title, rating, subject) values (%s, %s, %s)',
-                            (title, rank, subject))
+        self.data[item['chapter_id']] = ''
+        self.data[item['chapter_id']] += item['title']
+        self.data[item['chapter_id']] += '\n'
+        self.data[item['chapter_id']] += item['text']
+        self.data[item['chapter_id']] += '\n\n'
         return item
 
     def close_spider(self, spider):
-        self.conn.commit()
-        self.conn.close()
+        for i in range(len(self.data.keys())):
+            self.f.write(self.data[i])
+        self.f.close()
+        pass

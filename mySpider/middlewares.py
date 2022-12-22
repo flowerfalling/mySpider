@@ -9,18 +9,6 @@ from scrapy import signals
 from itemadapter import is_item, ItemAdapter
 
 
-def get_cookie_dict():
-    cookie_str = 'bid=IXSGVI7aBmY; dbcl2="265643151:OmImw3G1yw4"; ck=rW-W; _pk_ref.100001.4cf6=["","",1671631144,"https://accounts.douban.com/"]; _pk_id.100001.4cf6=0b4726466561a9d3.1671631144.1.1671631144.1671631144.; _pk_ses.100001.4cf6=*; __utma=30149280.969815627.1671631144.1671631144.1671631144.1; __utmb=30149280.0.10.1671631144; __utmc=30149280; __utmz=30149280.1671631144.1.1.utmcsr=accounts.douban.com|utmccn=(referral)|utmcmd=referral|utmcct=/; __utma=223695111.62624864.1671631144.1671631144.1671631144.1; __utmb=223695111.0.10.1671631144; __utmc=223695111; __utmz=223695111.1671631144.1.1.utmcsr=accounts.douban.com|utmccn=(referral)|utmcmd=referral|utmcct=/; push_noty_num=0; push_doumail_num=0'
-    cookie_dict = {}
-    for i in cookie_str.split('; '):
-        key, value = i.split('=', maxsplit=1)
-        cookie_dict[key] = value
-    return cookie_dict
-
-
-COOKIES_DICT = get_cookie_dict()
-
-
 class MyspiderSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
     # scrapy acts as if the spider middleware does not modify the
@@ -90,7 +78,6 @@ class MyspiderDownloaderMiddleware:
         # - or return a Request object
         # - or raise IgnoreRequest: process_exception() methods of
         #   installed downloader middleware will be called
-        request.cookies = COOKIES_DICT
         return None
 
     def process_response(self, request, response, spider):

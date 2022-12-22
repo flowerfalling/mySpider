@@ -7,23 +7,30 @@ from scrapy import Request
 
 class DemoSpider(scrapy.Spider):
     name = 'demo'
-    allowed_domains = ['movie.douban.com']
-    # start_urls = ['http://movie.douban.com/top250']
-
-    def start_requests(self):
-        for page in range(10):
-            yield Request(url=f'http://movie.douban.com/top250?start={page * 25}&filter=')
+    allowed_domains = ['www.9kmy.com']
+    start_urls = ['http://www.9kmy.com/shu/108946/']
 
     def parse(self, response: HtmlResponse, **kwargs):
         sel = Selector(response)
-        li_list = sel.css('#content > div > div.article > ol > li')
-        for li in li_list:
-            movie_item = MyspiderItem()
-            movie_item['title'] = li.css('span.title::text').extract_first()
-            movie_item['rank'] = li.css('span.rating_num::text').extract_first()
-            movie_item['subject'] = li.css('span.inq::text').extract_first()
-            yield movie_item
-        href_list = sel.css('div.paginator > a::attr(href)')
-        for href in href_list:
-            url = response.urljoin(href.extract())
-            yield Request(url=url)
+        li_list = sel.css('#ul_all_chapters > li')
+        for chapter_id, li in enumerate(li_list):
+            item = MyspiderItem()
+            item['chapter_id'] = chapter_id
+            item['title'] = li.css('a::text').extract_first()
+            item['text'] = ''
+            href = li.css('a::attr(href)').extract_first()
+            yield Request(href, callback=self.parse_text, cb_kwargs={'item': item})
+
+    def parse_text(self, response: HtmlResponse, **kwargs):
+        item = kwargs['item']
+        sel = Selector(response)
+        for p in sel.css('#article > p::text'):
+            item['text'] += p.extract().replace('\r', '\n')
+        next_page = sel.css('#next_url')
+        if '下一页' in next_page[0].css('::text').extract_first():
+            yield Request(response.urljoin(next_page[0].css('::attr(href)').extract_first()),
+                          callback=self.parse_text,
+                          cb_kwargs={'item': item})
+        else:
+            print(item['chapter_id'], item['title'])
+            yield item
