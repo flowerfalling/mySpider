@@ -7,7 +7,7 @@
 # useful for handling different item types with a single interface
 class MyspiderPipeline:
     def __init__(self):
-        self.f = open('背着老婆降妖除魔.txt', 'w+', encoding='utf-8')
+        self.f = open('data/背着老婆降妖除魔.txt', 'w+', encoding='utf-8')
         self.data = {}
         pass
 
