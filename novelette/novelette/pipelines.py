@@ -7,7 +7,7 @@
 # useful for handling different item types with a single interface
 class NovelettePipeline:
     def __init__(self):
-        self.f = open('背着老婆降妖除魔.txt', 'w+', encoding='utf-8')
+        self.f = open('穿进赛博游戏后干掉BOSS成功上位.txt', 'w+', encoding='utf-8')
         self.data = {}
         pass
 
@@ -21,6 +21,6 @@ class NovelettePipeline:
 
     def close_spider(self, spider):
         for i in range(len(self.data.keys())):
-            self.f.write(self.data[i])
+            self.f.write(self.data[i ])
         self.f.close()
         pass

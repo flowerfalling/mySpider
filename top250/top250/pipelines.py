@@ -5,7 +5,17 @@
 
 # useful for handling different item types with a single interface
 import pymysql
-from itemadapter import ItemAdapter
+
+
+# create table if not exists falling.tb_top_movie
+# (
+#     mov_id  int unsigned auto_increment comment '编号'
+#         primary key,
+#     title   varchar(50)             not null comment '标题',
+#     rating  decimal(3, 1)           not null comment '评分',
+#     subject varchar(200) default '' null comment '主题'
+# )
+#     comment 'Top电影表';
 
 
 class Top250Pipeline:
