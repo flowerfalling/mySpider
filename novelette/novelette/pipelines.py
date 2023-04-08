@@ -7,7 +7,7 @@
 # useful for handling different item types with a single interface
 class NovelettePipeline:
     def __init__(self):
-        self.f = open('废物机甲师是星际最强2.txt', 'w+', encoding='utf-8')
+        self.f = open('废物机甲师是星际最强.txt', 'w+', encoding='utf-8')
         self.data = {}
         pass
 
