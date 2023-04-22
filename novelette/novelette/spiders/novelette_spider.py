@@ -7,15 +7,15 @@ from scrapy import Request
 
 class NoveletteSpiderSpider(scrapy.Spider):
     name = 'novelette_spider'
-    allowed_domains = ['www.sbooktxt.com']
+    allowed_domains = ['www.qqxsw.so']
 
     def start_requests(self):
-        yield Request(url='https://www.sbooktxt.com/60_60380/')
+        yield Request(url='https://www.qqxsw.so/book_79872/')
 
     def parse(self, response: HtmlResponse, **kwargs):
         sel = Selector(response)
         li_list = sel.css('#list > dl > dd > a')
-        for chapter_id, li in enumerate(li_list):
+        for chapter_id, li in enumerate(li_list[12:]):
             item = NoveletteItem()
             item['chapter_id'] = chapter_id
             item['title'] = li.css('::text').extract_first()
@@ -27,7 +27,7 @@ class NoveletteSpiderSpider(scrapy.Spider):
     def parse_text(self, response: HtmlResponse, **kwargs):
         item = kwargs['item']
         sel = Selector(response)
-        for p in sel.css('#content::text'):
+        for p in sel.css('#content::text')[1:]:
             item['text'] += p.extract().replace('\r', '\n') + '\n'
         # next_page = sel.css('#next_url')
         # if '下一页' in next_page[0].css('#next_url').extract_first():
