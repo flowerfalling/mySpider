@@ -7,15 +7,15 @@ from scrapy import Request
 
 class NoveletteSpiderSpider(scrapy.Spider):
     name = 'novelette_spider'
-    allowed_domains = ['www.sywtxt.com']
+    allowed_domains = ['www.sdhear.com']
 
     def start_requests(self):
-        yield Request(url='https://www.sywtxt.com/61739_61739946/')
+        yield Request(url='https://www.sdhear.com/xiaoshuo/5/5175/', callback=self.parse)
 
     def parse(self, response: HtmlResponse, **kwargs):
         sel = Selector(response)
-        li_list = sel.css('body > div.listmain > dl > dd > a')
-        for chapter_id, li in enumerate(li_list[9:]):
+        li_list = sel.css('body > dl > dd > a')
+        for chapter_id, li in enumerate(li_list[2:]):
             item = NoveletteItem()
             item['chapter_id'] = chapter_id
             item['title'] = li.css('::text').extract_first()
@@ -27,12 +27,7 @@ class NoveletteSpiderSpider(scrapy.Spider):
     def parse_text(self, response: HtmlResponse, **kwargs):
         item = kwargs['item']
         sel = Selector(response)
-        f = False
-        for p in sel.css('#content::text'):
-            if '作者有话要说：　　' in p.extract():
-                f = True
-            if f and p.extract() == '        ……\r':
-                break
+        for p in sel.css('#content > p:nth-child(1)::text'):
             item['text'] += p.extract().replace('\r', '\n') + '\n'
         # next_page = sel.css('#next_url')
         # if '下一页' in next_page[0].css('#next_url').extract_first():
