@@ -239,3 +239,5 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+/novelette/novels/末世崛起.txt
+/novelette/novels/末世重建.txt
