@@ -7,16 +7,16 @@
 # useful for handling different item types with a single interface
 class NovelettePipeline:
     def __init__(self):
-        self.f = open(r'.\novels\又双叒叕上热搜了.txt', 'w+', encoding='utf-8')
+        self.f = open(r'.\novels\[综影]纷争女神.txt', 'w+', encoding='utf-8')
         self.data = {}
         pass
 
     def process_item(self, item, spider):
         self.data[item['chapter_id']] = ''
         self.data[item['chapter_id']] += item['title']
-        self.data[item['chapter_id']] += '\n    '
+        self.data[item['chapter_id']] += '\n'
         self.data[item['chapter_id']] += item['text']
-        self.data[item['chapter_id']] += '\n\n\n'
+        self.data[item['chapter_id']] += '\n\n'
         return item
 
     def close_spider(self, spider):
