@@ -7,7 +7,7 @@
 # useful for handling different item types with a single interface
 class NovelettePipeline:
     def __init__(self):
-        self.f = open(r'.\novels\全能女仆退休后[快穿].txt', 'w+', encoding='utf-8')
+        self.f = open(r'.\novels\戴上项圈.txt', 'w+', encoding='utf-8')
         self.data = {}
         pass
 
